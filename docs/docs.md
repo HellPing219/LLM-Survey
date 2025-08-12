@@ -40,10 +40,10 @@ Open `endpoint.php` and insert your openrouter key here.
 #### Adding a New LLM
 
 The llm requests are handled by [openrouter](https://openrouter.ai/). To add a new model to the list of available models, head to the [models page](https://openrouter.ai/models) and copy the models' code:<br>
-![openrouter model code example](openrouter-model-code.png)
+![openrouter model code example](images/openrouter-model-code.png)
 
 Paste the code in the `Large Language Models` field in the global plugin settings. Each code needs to have its own line with no other characters:<br>
-![plugin language model list](plugin-model-list.png)
+![plugin language model list](images/plugin-model-list.png)
 
 #### Prompts
 
@@ -60,11 +60,11 @@ becomes
 A user is 25 years old and...
 ```
 
-![Prompt example](prompt-example.png)
+![Prompt example](images/prompt-example.png)
 
 Note that ONLY the answer of a question is inserted and not the questions text. You need the tell the LLM what any answer means.
 For **multiple choice** questions a `Yes` is returned for a selected item (not the item itself!). If not selected the answer is empty.
-To include data from subquestions or other question types, see [Prompt Codes](./prompt-codes.md)
+To include data from subquestions or other question types, see [Prompt Codes](prompt-codes.md)
 
 ### Displaying LLM Output
 
@@ -86,16 +86,16 @@ Note: Because the plugin will hide questions, subquestions or answers whose inde
 ## Example
 
 Basic survey structure:<br>
-![structure](structure.png "Survey structure")<br>
+![structure](images/structure.png "Survey structure")<br>
 A closer look into the `requirements` question:<br>
-![requirements subquestions](requirements-subquestions.png "Requirements - subquestions")<br>
+![requirements subquestions](images/requirements-subquestions.png "Requirements - subquestions")<br>
 The first placeholder question:<br>
-![placeholder question](placeholder-question.png "Placeholder question")
+![placeholder question](images/placeholder-question.png "Placeholder question")
 The plugins survey settings:<br>
-![survey settings](survey-settings.png)<br>
+![survey settings](images/survey-settings.png)<br>
 
 Now we activate the survey. The structure now looks like this:<br>
-![structure after activation](structure-after-activation.png "Structure after activating the survey")<br>
+![structure after activation](images/structure-after-activation.png "Structure after activating the survey")<br>
 
 We can now run the survey as a test. With the provided example, the generated prompt looks like this:
 
@@ -118,5 +118,5 @@ The LLM returned:
 
 Which is then mapped onto the prepared questions:
 
-![LLM requirement 1](llm-req1.png)
-![LLM requirement 2](llm-req2.png)
+![LLM requirement 1](images/llm-req1.png)
+![LLM requirement 2](images/llm-req2.png)
