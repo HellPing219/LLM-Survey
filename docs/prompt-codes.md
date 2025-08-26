@@ -73,3 +73,72 @@ However the answer to the second scale is stored in a completely different forma
 ## Meta Fields
 
 Every survey has a field `[startlanguage]` which stores the language the user has selected for the survey. It can also be used in a prompt.
+
+# Answers
+
+## Single Choice Questions
+
+When using the code of a single choice question in the prompt the users **answer** is inserted.
+That means when you define your own answers in the answers tab and the user selects one of them, the text you wrote there as the answer is inserted into the prompt.
+Just use the normal question code of the parent question as a placeholder (not the answer codes).
+
+## Array Questions
+
+Array questions all have subquestions. Use the [**subquestions codes**](#subquestions) in the prompt to get the answer inserted.
+If you use the "normal" array question type you can also define your own answer scale. Your defined answer is then inserted when using the code in the prompt.
+Otherwise if you use a point choice scale, the chosen number is inserted as the answer. Same with all other scales. The plugin always inserts the chosen answer for that subquestion.
+
+## Multiple Choice Questions
+
+Multiple choice questions all have subquestion. Use the [**subquestions codes**](#subquestions) in the prompt to get a `Yes` or `No` inserted, depending if the user selected this item.
+Unlike single choice the problem with multiple choice questions is that there is no definitive answer. This is why we only get a Yes or No for each subquestion. To use them in a prompt in a meaningful way, you'd need something like a list where you tell the LLM all the items and if the user picked them or not.
+
+**Example:**
+
+```
+From this list of car manufacturers the user already knew:
+Volkswagen: [qCode_sqCodeVW];
+BMW: [qCode_sqCodeBMW];
+Mercedes: [qCode_sqCodeMerc];
+```
+
+If the user chose Volkswagen and Mercedes the prompt becomes:
+
+```
+From this list of car manufacturers the user already knew:
+Volkswagen: Yes;
+BMW: No;
+Mercedes: Yes;
+```
+
+## Text Questions
+
+For text questions simpy use the questions code in the prompt to get the users answer inserted.
+The only exception is the question type "Input on demand" where you need to specify subquestions for each entry the user can make. For this question type you need to use the subquestions codes to access the answer from the respective fields.
+
+## Mask Questions
+
+### Date/Time
+
+Is inserted as a UTC string and the LLM should be able to understand it.
+
+### Gender
+
+Is inserted as `Female`, `Male` or `N/A`.
+
+### Multiple Numerical Input
+
+Same as "Input on demand". Use subquestions codes to access the number from the respective fields.
+
+### Numerical Input
+
+Inserts the provided number from this field into the prompt.
+**Note:** The number is rounded to the nearest integer. LimeSurvey stores numbers with a large amount of unnecessary zeroes after the decimal point. So the number 3 would be stored as 3.0000000000 which sometimes lead to the LLM believing the number was way bigger than it actually was. That's why we are rounding it for the prompt.
+
+### Ranking
+
+Ranking questions insert your predefined answers in the prompt. See [Ranking](#ranking)
+
+### Yes/No
+
+Yes/No questions insert `Yes`, `No` or `No answer` into the prompt. Use the normal question code.

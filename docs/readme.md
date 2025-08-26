@@ -80,6 +80,7 @@ Note: The question type `bootstrap dropdown` cannot be used to display LLM outpu
 Activate the survey after making sure, your settings and questions are correctly set.
 On activation the plugin inserts a few hidden questions. These are used to save the language model, prompt and parameters within the response.
 A hidden question with the code `llmOutput{index}` is inserted right before the first occurrence of each llm-placeholder to store the LLM output at this index.
+The survey can be deactivated and activated again however if you've changed the order of an llm-placeholder question, you may want to move the inserted hidden question that stores the output at that index as well. If you delete an automatically added hidden question, it just gets created again when the survey is activated.
 
 Note: Because the plugin will hide questions, subquestions or answers whose index exceeds the returned LLM output, every placeholder question will be set to non-mandatory upon activation because having a mandatory question hidden can result in the survey being incompletable.
 
