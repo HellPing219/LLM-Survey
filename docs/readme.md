@@ -25,7 +25,7 @@ Open `endpoint.php` and insert your openrouter key here.
 
 1. After activating the plugin, start by adding one or multiple LLMs to the global plugin settings. See [Adding a New LLM](#adding-a-new-llm)
 
-2. Create your survey normally (must be in english or german) but try to use meaningful question codes for the questions and subquestions you wish to use in the prompt later. You will need them to insert the users answers into the prompt. See [Prompts](#prompts)
+2. Create your survey normally but try to use meaningful question codes for the questions and subquestions you wish to use in the prompt later. You will need them to insert the users answers into the prompt. See [Prompts](#prompts)
 
 3. Create a new question group at the end of your survey with the questions into which the LLM output should then be inserted. It is important that these placeholder questions are placed on later pages than the last question whose answer you want to include in the prompt. Assigning the LLM output to the placeholder questions works via the questions code as well. See [Displaying LLM Output](#displaying-llm-output)
 
