@@ -24,7 +24,7 @@ The plugin extends LimeSurvey with the capability to use participant answers (e.
 1. Create a new folder inside your LimeSurvey plugins folder with the name `LLMSurvey`.
 
    ```
-   mkdir /LIMESURVEY_HOME_FOLDER/plugins/LLMSurvey
+   mkdir /LIMESURVEY_HOME_DIR/plugins/LLMSurvey
    ```
 
 2. Paste all files from the `src/` folder into the created folder.
