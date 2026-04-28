@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <metadata>
+        <name>LLMSurvey</name>
+        <type>plugin</type>
+        <creationDate>2025-06-16</creationDate>
+        <lastUpdate>2025-12-01</lastUpdate>
+        <author>Kristoffer Martin, M. Sc. Michael Mircea</author>
+        <version>2.3</version>
+        <license></license>
+        <description>LimeSurvey Plugin to prompt users to assess received LLM-Output.</description>
+    </metadata>
+    <compatibility>
+        <version>6.0</version>
+    </compatibility>
+    <updaters disabled="disabled"></updaters>
+</config>

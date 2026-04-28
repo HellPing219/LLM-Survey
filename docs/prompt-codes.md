@@ -1,64 +1,139 @@
 # Prompt Codes
 
-Use this list to create the placeholders for the prompt.
+Use this list to create the placeholders. Below is a list for each question type with an example prompt as well as filled in with example data.
 
-## Normal questions
+**In the following examples the question always has the question code `exampleQuestion`.**
 
-To insert an answer of a normal question, simply use the questions code:
+If no answer was selected for a question, `"N/A"` is inserted at the placeholder. Empty text fields however are inserted as an empty string.
 
+- [Single Choice Questions](#single-choice-questions)
+- [Arrays](#arrays)
+- [Multiple Choice Questions](#multiple-choice-questions)
+- [Text Questions](#text-questions)
+- [Mask Questions](#mask-questions)
+- [Meta Fields](#meta-fields)
+
+## Single Choice Questions
+
+### 5 Point Choice
+
+Prompt:
 ```
-A user is [age] years old and...
-```
-
-## Subquestions
-
-To insert an answer of a subquestion, combine the parents question code and the subquestions code:
-
-**Example:** You have an array question with the code `eval` where a user has to give a score to multiple items.
-
-```
-The user gave this item a score of [eval_item1] / 10.
-```
-
-## Comment questions
-
-To insert the comment of a comment question, append 'comment' to the end of the question code:
-
-**Example:** You have a question where a user has to choose their favorite color from a list.
-
-```
-The user chose [colorList] as their favorite color and wrote [colorList_comment] as a comment.
+A user evaluated this item with a score of [exampleQuestion] / 5.
 ```
 
-## Comment subquestions
-
-To insert the comment of a comment subquestion, append 'comment' to the subquestion code:
-
+The user selected the number 3:
 ```
-From a list of red, green and blue a user chose the following:
-    red: [colorList_red] with comment [colorList_redcomment],
-    green: [colorList_green] with comment [colorList_greencomment],
-    blue: [colorList_blue] with comment [colorList_bluecomment].
+A user evaluated this item with a score of 3 / 5.
 ```
 
-## Ranking
+### Bootstrap Buttons, Bootstrap Dropdown, List (Dropdown), List (Radio), List with Comment
 
-To get the items at a specific rank from the ranking question type:
-
+Prompt:
 ```
-The user chose [rankQuestion_1] as rank 1 and [rankQuestion_2] as rank 2 ...
-```
-
-## Array Numbers and Array Texts
-
-These questions combine two subquestions to select the field. The structure looks as follows:
-
-```
-[qCode_sqY1_sqX1] [qCode_sqY1_sqX2]
-[qCode_sqY2_sqX1] [yCode_sqY2_sqX2]
+A user chose [exampleQuestion] as their favorite color.
 ```
 
-## Array Dual Scale
+The user selected the item which read "green":
+```
+A user chose green as their favorite color.
+```
+
+#### 'Other' Field
+
+Access the 'other'-field by appending '_other' to the question code.
+
+Prompt:
+```
+A user chose [exampleQuestion][exampleQuestion_other] as their favorite color.
+```
+
+The user selected the option 'other' and wrote "yellow":
+```
+A user chose yellow as their favorite color.
+```
+
+#### List with Comment - 'Comment' Field
+
+Prompt:
+```
+A user wrote '[exampleQuestion_comment]' as a comment.
+```
+
+The user wrote "Green matches my vibe" as their comment:
+```
+A user wrote 'Green matches my vibe' as a comment.
+```
+
+## Arrays
+
+### Array, Array by Column
+
+*This is an example for Array. Array by column works the same, however you might need to switch subquestions and answer options and rewrite the prompt.*
+
+Subquestions: `sq01`: red, `sq02`: green<br>
+Answer options: `ans1`: I like it, `ans2`: I don't mind it, `ans3`: I dislike it
+
+Prompt:
+```
+A user was presented colors. To the color red they said '[exampleQuestion_sq01]' and to the color green they said '[exampleQuestion_sq02]'.
+```
+
+The user said they liked green and didn't mind red:
+```
+A user was presented colors. To the color red they said 'I don't mind it' and to the color green they said 'I like it'.
+```
+
+### Array (5 Point Choice), Array (10 Point Choice)
+
+*This is an example for Array (5 Point Choice). Array (10 Point Choice) works the same but the numbers can go up to 10.*
+
+Subquestions: `sq01`: red, `sq02`: green<br>
+
+Prompt:
+```
+A user was presented colors. They rated the color red [exampleQuestion_sq01] / 5 and the color green [exampleQuestions_sq02] / 5.
+```
+
+The user rated green with a 5 and red with a 2:
+```
+A user was presented colors. They rated the color red 2 / 5 and the color green 5 / 5.
+```
+
+### Array (Increase / Same / Decrease), Array (Yes / No / Uncertain)
+
+*This is an example for Array (Increase / Same / Decrease). Array (Yes / No / Uncertain) works the same.*
+
+Subquestions: `sq01`: Happiness, `sq02`: Luck
+
+Prompt:
+```
+A user evaluated some values and selected Happiness - [exampleQuestion_sq01] and Luck - [exampleQuestion-sq02].
+```
+
+The user selected the field increase for both Happiness and Luck:
+```
+A user evaluated some values and selected Happiness - Increase and Luck - Increase.
+```
+
+### Array (Numbers), Array (Texts)
+
+*This is an example for Array (Numbers). Array (Texts) works the same.*
+
+Y-Scale: `sqY01`: Google, `sqY02`: Bing<br>
+X-Scale: `sqX01`: Speed, `sqX02`: Design
+
+Prompt:
+```
+In terms of speed the user gave google the score [exampleQuestion_sqY01_sqX01] and bing [exampleQuestion_sqY02_sqX01]. In terms of design the user gave google the score [exampleQuestion_sqY01_sqX02] and bing [exampleQuestion_sqY02_sqX02].
+```
+
+The user gave google a 4 for speed and a 5 for design and bing a 5 for speed and a 3 for design:
+```
+In terms of speed the user gave google the score 4 and bing 5. In terms of design the user gave google the score 5 and bing 3.
+```
+
+### Array Dual Scale
 
 To get the answer to the subquestion for the first scale, simply use the structure `[qCode_sqCode]`.
 However the answer to the second scale is stored in a completely different format. To access it use the following structure:
@@ -67,78 +142,186 @@ However the answer to the second scale is stored in a completely different forma
 - surveyId is the 6 digit number of the survey
 - questionGroupId and questionId can be found when clicking on the question in the structure tab of the survey
 - subquestionCode is the code you'd normally use
+- the `#1` is always there when accessing the second scale
 
-**Example:** `[592886X51X517sq001#1]`
+Subquestions: `sq01`: green, `sq02`: red<br>
+Answer Scale 1: `ans1`: like, `ans2`: dislike<br>
+Answer Scale 2: `ans1`: bright, `ans2`: dark
 
-## Meta Fields
+Prompt:
+```
+A user says they [exampleQuestion_sq01] the color green and they find it [592886X51X517sq01#1]. They also say they [exampleQuestion_sq02] the color red and they think it is a [592886X51X517sq02#1] color.
+```
 
-Every survey has a field `[startlanguage]` which stores the language the user has selected for the survey. It can also be used in a prompt.
-
-# Answers
-
-## Single Choice Questions
-
-When using the code of a single choice question in the prompt the users **answer** is inserted.
-That means when you define your own answers in the answers tab and the user selects one of them, the text you wrote there as the answer is inserted into the prompt.
-Just use the normal question code of the parent question as a placeholder (not the answer codes).
-
-## Array Questions
-
-Array questions all have subquestions. Use the [**subquestions codes**](#subquestions) in the prompt to get the answer inserted.
-If you use the "normal" array question type you can also define your own answer scale. Your defined answer is then inserted when using the code in the prompt.
-Otherwise if you use a point choice scale, the chosen number is inserted as the answer. Same with all other scales. The plugin always inserts the chosen answer for that subquestion.
+The user liked the color green and thought it was a bright color and they disliked the color red and said it was a rather dark color:
+```
+A user says they like the color green and they find it bright. They also say they dislike the color red and they think it is a dark color.
+```
 
 ## Multiple Choice Questions
 
-Multiple choice questions all have subquestion. Use the [**subquestions codes**](#subquestions) in the prompt to get a `Yes` or `No` inserted, depending if the user selected this item.
-Unlike single choice the problem with multiple choice questions is that there is no definitive answer. This is why we only get a Yes or No for each subquestion. To use them in a prompt in a meaningful way, you'd need something like a list where you tell the LLM all the items and if the user picked them or not.
+### Bootstrap Buttons, Multiple Choice, Multiple Choice with Comments
 
-**Example:**
+Subquestions: `sq01`: red, `sq02`: green, `sq03`: blue
 
+Prompt:
 ```
-From this list of car manufacturers the user already knew:
-Volkswagen: [qCode_sqCodeVW];
-BMW: [qCode_sqCodeBMW];
-Mercedes: [qCode_sqCodeMerc];
+A user was presented multiple colors and had to evaluate whether they liked them or not:
+red: [exampleQuestion_sq01]
+green: [exampleQuestion_sq02]
+blue: [exampleQuestion_sq03]
 ```
 
-If the user chose Volkswagen and Mercedes the prompt becomes:
-
+The user selected green and blue:
 ```
-From this list of car manufacturers the user already knew:
-Volkswagen: Yes;
-BMW: No;
-Mercedes: Yes;
+A user was presented multiple colors and had to evaluate whether they liked them or not:
+red: No
+green: Yes
+blue: Yes
+```
+
+#### 'Other' Field
+
+Access the 'other'-field by appending '_other' to the question code.
+
+Prompt:
+```
+From this list the user chose red: [exampleQuestion_sq01], green: [exampleQuestion_sq02]. They had the choice to define their own color, in this field they wrote '[exampleQuestion_other]'.
+```
+
+The user selected the options "green" and wrote "yellow" in the 'other' field:
+```
+From this list the user chose red: No, green: Yes. They had the choice to define their own color, in this field they wrote 'yellow'.
+```
+
+#### Multiple Choice with Comments - 'Comment' Field
+
+Prompt:
+```
+When evaluating the color red the user wrote '[exampleQuestion_sq01comment]'.
+```
+
+The user wrote "Stop asking me about colors!" as their comment to the color red:
+```
+When evaluating the color red the user wrote 'Stop asking me about colors!'.
 ```
 
 ## Text Questions
 
-For text questions simpy use the questions code in the prompt to get the users answer inserted.
-The only exception is the question type "Input on demand" where you need to specify subquestions for each entry the user can make. For this question type you need to use the subquestions codes to access the answer from the respective fields.
+### Huge Free Text, Long Free Text, Short Free Text
+
+Prompt:
+```
+The favorite food of this user is [exampleQuestion].
+```
+
+The user wrote "Spaghetti" as their favorite food.
+```
+The favorite food of this user is Spaghetti.
+```
+
+### Input on Demand, Multiple Short Text
+
+Subquestions: `sq01`: Your favorite food, `sq02`: Your favorite color
+
+Prompt:
+```
+The user said [exampleQuestion_sq01] was their favorite food and [exampleQuestion_sq02] was their favorite color.
+```
+
+The user wrote "Spaghetti" and "green":
+```
+The user said Spaghetti was their favorite food and green was their favorite color.
+```
 
 ## Mask Questions
 
-### Date/Time
+### Date / Time
 
-Is inserted as a UTC string and the LLM should be able to understand it.
+Prompt:
+```
+The last time the user ate their favorite food was on [exampleQuestion].
+```
+
+The user chose the date 11-23-2025:
+```
+The last time the user ate their favorite food was on 11-23-2025.
+```
 
 ### Gender
 
-Is inserted as `Female`, `Male` or `N/A`.
+Prompt:
+```
+The users gender is [exampleQuestion].
+```
+
+The user selected Female as their gender:
+```
+The users gender is Female.
+```
 
 ### Multiple Numerical Input
 
-Same as "Input on demand". Use subquestions codes to access the number from the respective fields.
+Subquestions: `sq01`: books read, `sq02`: movies watched
+
+Prompt:
+```
+The user stated they read [exampleQuestion_sq01] books and watched [exampleQuestion_sq02] movies in the past year.
+```
+
+The user read 3 books and watched 15 movies.
+```
+The user stated they read 3 books and watched 15 movies in the past year.
+```
 
 ### Numerical Input
 
-Inserts the provided number from this field into the prompt.
-**Note:** The number is rounded to the nearest integer. LimeSurvey stores numbers with a large amount of unnecessary zeroes after the decimal point. So the number 3 would be stored as 3.0000000000 which sometimes lead to the LLM believing the number was way bigger than it actually was. That's why we are rounding it for the prompt.
+Prompt:
+```
+The user is [exampleQuestion] years old.
+```
 
-### Ranking
+The user wrote 37:
+```
+The user is 37 years old.
+```
 
-Ranking questions insert your predefined answers in the prompt. See [Ranking](#ranking)
+### Ranking, Ranking Advanced
 
-### Yes/No
+Answer options: `ans1`: red, `ans2`: green
 
-Yes/No questions insert `Yes`, `No` or `No answer` into the prompt. Use the normal question code.
+Prompt:
+```
+The user was presented colors and had to rank them. They chose [exampleQuestion_1] as rank 1 and [exampleQuestion_2] as rank 2.
+```
+
+The user put the color green at position 1 and the color red at position 2:
+```
+The user was presented colors and had to rank them. They chose green as rank 1 and red as rank 2.
+```
+
+### Yes / No
+
+Prompt:
+```
+The user was asked if they would participate in this study again. Their answer was [exampleQuestion].
+```
+
+The user selected No.
+```
+The user was asked if they would participate in this study again. Their answer was No.
+```
+
+## Meta Fields
+
+Every survey has a field `[startlanguage]` which stores the language the user has selected for the survey (ISO-639-1 (e.g., "en", "de", "fr")). It can also be used in a prompt.
+
+Prompt:
+```
+The current language of this survey is [startlanguage].
+```
+
+The user started the survey in english:
+```
+The current language of this survey is en.
+```
